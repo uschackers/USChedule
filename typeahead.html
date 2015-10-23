@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TypeAhead</title>
+</head>
+<body>
+
+<div id="custom-templates">
+  <input class="typeahead" type="text" placeholder="Type in your course">
+  <input class="typeahead" type="text" placeholder="Type in your course">
+</div>
+
+<script src="handlebars.js"></script>
+<script src="jquery.js"></script>
+<script src="typeahead.js"></script>
+<script>
+var courses = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tokens'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: '/data.php'
+});
+
+$('#custom-templates .typeahead').typeahead(null, {
+  name: 'course-code',
+  display: 'course',
+  limit: 10,
+  source: courses,
+  templates: {
+    empty: [
+      '<div class="empty-message">',
+        'unable to find any Best Picture winners that match the current query',
+      '</div>'
+    ].join('\n'),
+    suggestion: Handlebars.compile('<div><strong>{{course}}</strong> - {{title}}</div>')
+  }
+});
+</script>
+</body>
+</html>

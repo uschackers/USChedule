@@ -1,0 +1,23 @@
+<html>
+<body>
+
+<button onclick="myFunction()">Try it</button>
+
+<script>
+var array = ["AHIS", "ALI", "AMST", "ANTH", "ARAB", "ASTR", "BISC", "CHEM", "CLAS", "COLT", "CORE", "CSLC", "EALC", "EASC", "ECON", "ENGL", "ENST", "EXSC", "FREN", "FSEM", "GEOG", "GEOL", "GERM", "SWMS", "GR", "HEBR", "HIST", "HBIO", "INDS", "IR", "IRAN", "ITAL", "JS", "LAT", "LBST", "LING", "MATH", "MDA", "MDES", "MPW", "NEUR", "NSCI", "OS", "PHED", "PHIL", "PHYS", "POIR", "PORT", "POSC", "PSYC", "REL", "RNR", "SLL", "SOCI", "SPAN", "SSCI", "SSEM", "USC", "WRIT", "ACCT", "ARCH", "ACAD", "BAEP", "BUAD", "BUCO", "DSO", "FBE", "GSBA", "LIM", "MKT", "MOR", "CMPP", "CNTV", "CTAN", "CTCS", "CTIN", "CTPR", "CTWR", "IML", "ASCJ", "CMGT", "COMM", "DSM", "JOUR", "PUBD", "DANC", "DENT", "CBY", "DHYG", "DIAG", "DPBL", "GDEN", "OFPM", "PEDO", "PERI", "THTR", "EDCO", "EDHP", "EDPT", "EDUC", "AME", "ASTE", "BME", "CHE", "CE", "CSCI", "EE", "ENE", "ENGR", "ISE", "INF", "ITP", "MASC", "PTE", "SAE", "ART", "CRIT", "DES", "FA", "FACE", "FACS", "FADN", "FADW", "FAIN", "FAPH", "FAPT", "FAPR", "FASC", "PAS", "WCT", "GCT", "SCIN", "SCIS", "ARLT", "SI", "ARTS", "HINQ", "SANA", "LIFE", "PSC", "QREA", "GPG", "GPH", "GESM", "GERO", "GRSC", "LAW", "ACMD", "ANST", "BIOC", "CBG", "DSR", "HP", "INTD", "MED", "MEDB", "MEDS", "MICB", "MPHY", "MSS", "NIIN", "PATH", "PHBI", "PM", "PCPA", "SCRM", "ARTL", "MTEC", "MSCR", "MUCM", "MUCO", "MUCD", "MUED", "MUEN", "MUHL", "MUIN", "MUJZ", "MPEM", "MPGU", "MPKS", "MPPM", "MPST", "MPVA", "MPWP", "MUSC", "OT", "HCDA", "MPTX", "PHRD", "PMEP", "PSCI", "BKN", "PT", "AEST", "HMGT", "MS", "NAUT", "NSC", "PPD", "PPDE", "PLUS", "RED", "SOWK"];
+
+function myFunction(){
+
+	for(i=0;i<array.length;i++){
+		setTimeout(thingy(i),1000);
+	}
+	clearTimeout(thingy);
+
+}
+
+function thingy(x){
+	window.open("http://classes.usc.edu/term-20161/csv/" + array[x] + ".csv");
+}
+</script>
+</body>
+</html>

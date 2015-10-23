@@ -1,15 +1,113 @@
+<!DOCTYPE html>
 <html>
+
+<head>
+	<title>WWE SMACKDOWN</title>
+
+	<link rel="stylesheet" type="text/css" href="wwe.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Merriweather' rel='stylesheet' type='text/css'>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript">
+		var counter = 1;
+		var limit = 7;
+
+		function addCourse(divName){
+		     if (counter == limit)  {
+		          alert("Too many courses added");
+		     }
+		     else {
+		          var newdiv = document.createElement('div');
+		          newdiv.innerHTML = "Class " + (counter + 1) + " <br><input type='text' name='class-" + (counter+1) + "'>";
+		          document.getElementById(divName).appendChild(newdiv);
+		          typeaheadcall(++counter);
+			     }
+
+		}
+	</script>
+</head>
 <body>
-<form method="get" action="rah.php">
 
-<input type="text" name="class" />
-<select name="pref">
-<option value="1"> Morning </option>
-<option value="2"> Afternoon </option>
-<option value="3"> TGIF </option>
+<main>
 
-</select>
-<input type="submit" value="Generate My Schedule!" />
-</form>
+	<!--<header>
+		<img src="smackdown.png">
+		<h1>USChedule</h1>
+	</header>-->
+
+
+
+	<form action="rah.php">
+		<div class="coursecontainer">
+			<h4><b>Enter Courses: </b></h4>
+			<div id="dynamicInput" class="typeahead">
+				Class 1<br><input type="text" name="class-1"/>
+			</div>
+			<input class="btn" type="button" value="Add another course" onClick="addCourse('dynamicInput');">
+		</div>
+
+		<div class="filtercontainer">
+			<h4>Select Filters: </h4>
+			<fieldset>
+				<legend>I don't want classes at: </legend>
+				<input type="checkbox" name="filter" value="8am"/> 8am 
+				<input type="checkbox" name="filter" value="9am"/> 9am 
+				<input type="checkbox" name="filter" value="10am"/> 10am 
+				<input type="checkbox" name="filter" value="11am"/> 11am 
+			</fieldset>
+			<fieldset>
+				<legend>I don't want classes on these days: </legend>
+				<input type="checkbox" name="filter" value="mon"/> Monday
+				<input type="checkbox" name="filter" value="tues"/> Tuesday
+				<input type="checkbox" name="filter" value="wed"/> Wednesday
+				<input type="checkbox" name="filter" value="thur"/> Thursday
+				<input type="checkbox" name="filter" value="fri"/> Friday
+			</fieldset>
+			<fieldset>
+				<legend>Optimize my schedule for RateMyProfessor scores</legend>
+				<input type="radio" name="filter" value="tRMP" checked> Yes <br>
+				<input type="radio" name="filter" value="fRMP"> No <br>
+			</fieldset>
+			<input class="btn" type="submit" value="Generate">
+		</div>
+	</form>
+
+
+
+</main>
+
+<script src="handlebars.js"></script>
+<script src="jquery.js"></script>
+<script src="typeahead.js"></script>
+<script>
+
+$(document).ready(typeaheadcall(1));
+
+function typeaheadcall(key){
+	var courses = new Bloodhound({
+	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tokens'),
+	  queryTokenizer: Bloodhound.tokenizers.whitespace,
+	  prefetch: '/data.php'
+	});
+
+	$('#dynamicInput input[name=class-'+key+']').typeahead({highlight:true}, {
+	  name: 'course-code',
+	  display: 'course',
+	  limit: 10,
+	  source: courses,
+	  templates: {
+	    empty: [
+	      '<div class="empty-message">',
+	        'unable to find any courses that match the current query',
+	      '</div>'
+	    ].join('\n'),
+	    suggestion: Handlebars.compile('<div><strong>{{course}}</strong><br><i>{{title}}</i></div>')
+	  }
+	});
+}
+</script>
+
 </body>
+
 </html>
