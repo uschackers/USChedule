@@ -1,31 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>WWE SMACKDOWN</title>
-
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="wwe.css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Merriweather' rel='stylesheet' type='text/css'>
-
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<script type="text/javascript">
-		var counter = 1;
-		var limit = 7;
-
-		function addCourse(divName){
-		     if (counter == limit)  {
-		          alert("Too many courses added");
-		     }
-		     else {
-		          var newdiv = document.createElement('div');
-		          newdiv.innerHTML = "Class " + (counter + 1) + " <br><input type='text' name='class-" + (counter+1) + "'>";
-		          document.getElementById(divName).appendChild(newdiv);
-		          typeaheadcall(++counter);
-			     }
-
-		}
-	</script>
+	<title>WWE SMACKDOWN</title>
 </head>
 <body>
 
@@ -37,75 +17,144 @@
 	</header>-->
 
 
+<section id="coursecontainer">
+	<h4>Classes</h4>
+	<ul id="dynamicInput" class="typeahead">
+		<li><input type="text" id="classInput" name="class-1" placeholder="Enter a class"/><p>Hit enter to add a new class.</p></li>
+	</ul>
+	<input class="btn" type="button" value="Next" onclick="$('#filtercontainer').show();">
+</section>
 
-	<form action="rah.php">
-		<div class="coursecontainer">
-			<h4><b>Enter Courses: </b></h4>
-			<div id="dynamicInput" class="typeahead">
-				Class 1<br><input type="text" name="class-1"/>
-			</div>
-			<input class="btn" type="button" value="Add another course" onClick="addCourse('dynamicInput');">
-		</div>
-
-		<div class="filtercontainer">
-			<h4>Select Filters: </h4>
-			<fieldset>
-				<legend>I don't want classes at: </legend>
-				<input type="checkbox" name="filter" value="8am"/> 8am 
-				<input type="checkbox" name="filter" value="9am"/> 9am 
-				<input type="checkbox" name="filter" value="10am"/> 10am 
-				<input type="checkbox" name="filter" value="11am"/> 11am 
-			</fieldset>
-			<fieldset>
-				<legend>I don't want classes on these days: </legend>
-				<input type="checkbox" name="filter" value="mon"/> Monday
-				<input type="checkbox" name="filter" value="tues"/> Tuesday
-				<input type="checkbox" name="filter" value="wed"/> Wednesday
-				<input type="checkbox" name="filter" value="thur"/> Thursday
-				<input type="checkbox" name="filter" value="fri"/> Friday
-			</fieldset>
-			<fieldset>
-				<legend>Optimize my schedule for RateMyProfessor scores</legend>
-				<input type="radio" name="filter" value="tRMP" checked> Yes <br>
-				<input type="radio" name="filter" value="fRMP"> No <br>
-			</fieldset>
-			<input class="btn" type="submit" value="Generate">
-		</div>
-	</form>
+<section id="filtercontainer">
+	<h4>Optimize Schedule</h4>
+	<div>
+		<b>I don't want classes before: </b>
+		<p>
+			<input type="radio" id="9am" name="class" value="9"/><label for="9am">9am</label>
+			<input type="radio" id="10am" name="class" value="10"/><label for="10am">10am</label>
+			<input type="radio" id="11am" name="class" value="11"/><label for="11am">11am</label>
+			<input type="radio" id="12am" name="class" value="12"/><label for="12am">12am</label>
+			<input type="radio" id="idc" name="class" value="idc" checked><label for="idc">I don't care</label>
+		</p>
+	</div>
+	<div>
+		<b>I don't want classes on these days: </b>
+		<p>
+			<input type="checkbox" id="mon" name="filter" value="mon"/><label for="mon">Monday</label>
+			<input type="checkbox" id="tue" name="filter" value="tue"/><label for="tue">Tuesday</label>
+			<input type="checkbox" id="wed" name="filter" value="wed"/><label for="wed">Wednesday</label>
+			<input type="checkbox" id="thu" name="filter" value="thu"/><label for="thu">Thursday</label>
+			<input type="checkbox" id="fri" name="filter" value="fri"/><label for="fri">Friday</label>
+		</p>
+	</div>
+	<div>
+		<b>Optimize my schedule for RateMyProfessor scores</b>
+		<p>
+			<input type="radio" id="rmp-t" name="rmp" value="true" checked><label for="rmp-t">Yes</label>
+			<input type="radio" id="rmp-f" name="rmp" value="false"><label for="rmp-f">No</label>
+		</p>
+		<div><input class="btn" type="submit" value="Generate"></div>
+	</div>
+</section>
 
 
 
 </main>
 
-<script src="handlebars.js"></script>
-<script src="jquery.js"></script>
-<script src="typeahead.js"></script>
+<script src="/js/handlebars.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/typeahead.js"></script>
 <script>
 
-$(document).ready(typeaheadcall(1));
+$(document).ready(function() {
 
-function typeaheadcall(key){
-	var courses = new Bloodhound({
-	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tokens'),
-	  queryTokenizer: Bloodhound.tokenizers.whitespace,
-	  prefetch: '/data.php'
-	});
+var courses = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tokens'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: '/data.php'
+});
 
-	$('#dynamicInput input[name=class-'+key+']').typeahead({highlight:true}, {
-	  name: 'course-code',
-	  display: 'course',
-	  limit: 10,
-	  source: courses,
-	  templates: {
-	    empty: [
-	      '<div class="empty-message">',
-	        'unable to find any courses that match the current query',
-	      '</div>'
-	    ].join('\n'),
-	    suggestion: Handlebars.compile('<div><strong>{{course}}</strong><br><i>{{title}}</i></div>')
-	  }
-	});
+
+$('#dynamicInput input[type=text]').typeahead({highlight:true}, {
+  name: 'course-code',
+  display: 'course',
+  limit: 10,
+  source: courses,
+  templates: {
+    empty: [
+      '<div class="empty-message">',
+        'unable to find any courses that match the current query',
+      '</div>'
+    ].join('\n'),
+    suggestion: Handlebars.compile('<div><strong>{{course}}</strong><br><i>{{title}}</i></div>')
+  }
+});
+
+
+// ADD COURSE
+
+var arrClass = [];
+var maxClasses = 9;
+
+function addCourse(){
+	//var thisparent = $("#class-li-"+counter);
+	var ggval = document.getElementById("classInput").value.toUpperCase();
+	if(arrClass.indexOf(ggval) > -1 || arrClass.length >= maxClasses){
+	}
+	else {
+		$.get('/course.php',{classid:ggval},function(result){
+			if (result[0] == 0){ }
+			else {
+				arrClass.push(ggval);
+				document.getElementById("classInput").value = "";
+				var newdiv = $(document.createElement('li'));
+
+				var getString = $(document.createElement('div'));
+				$.get(
+					'/course.php',
+					{classid:ggval},
+					function(result){
+						for(var key in result){
+							if(result[key] != 0){
+								var textNode = getString.append("<input type=\"checkbox\" id=\""+ggval+"-"+key+"\" checked><label for=\""+ggval+"-"+key+"\">"+result[key]+"</label>");
+							}
+						}
+					},
+					'json'
+				);
+
+				newdiv.html("<b>"+ggval+"</b> <a>[x]</a> <input type=\"hidden\" name=\"class\" value=\""+ggval+"\">");
+				newdiv.append(getString);
+
+				$("#dynamicInput> li").last().before(newdiv);
+				if(arrClass.length >= maxClasses){
+					$("#dynamicInput > li").last().hide();
+				}
+			}
+		},'json');
+	}
 }
+
+
+$("ul#dynamicInput > li").on("keyup","input",function(e){
+	if(e.which==13){
+		e.preventDefault();
+		addCourse();
+	}
+});
+
+$("ul#dynamicInput").on("click","a",function(){
+	var crs = $(this).parent("li").children("b").html();
+	$(this).closest("li").replaceWith("");
+	arrClass.splice(arrClass.indexOf(crs),1);
+	if(arrClass.length < maxClasses){
+		$("#dynamicInput > li").last().show();
+	}
+});
+
+
+});
+
 </script>
 
 </body>

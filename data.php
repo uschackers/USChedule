@@ -2,12 +2,7 @@
 
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "johncena";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {die("DUMP");}
+include 'func/db.php';
 
 $arr = array();
 $sql = "SELECT course, title FROM classes";
