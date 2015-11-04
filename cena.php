@@ -8,7 +8,9 @@ $subject = array("AHIS", "ALI", "AMST", "ANTH", "ARAB", "ASTR", "BISC", "CHEM", 
 function insertClasses($course,$title,$units,$conn){
 	$title = addslashes($title);
 	$query = "INSERT INTO classes (id, course, title, units) VALUES ('', '$course', '$title', '$units')";
-	if(!empty($_POST["con"])){
+	$query2 = "SELECT * FROM classes WHERE course='$course'";
+	$result2 = $conn->query($query2);
+	if(!empty($_POST["con"]) && $result2->num_rows==0){
 		echo "INSERTED CLASSES.<br>";
 		if($conn->query($query) === TRUE) {} else echo $query."<br>";
 	}
@@ -18,7 +20,9 @@ function insertSection($class_id,$theme,$type,$section,$time_start,$time_end,$da
 	$instructor = addslashes($instructor);
 	$theme = addslashes($theme);
 	$query = "INSERT INTO section (id, class_id, theme, type, section, time_start, time_end, days, instructor, room) VALUES ('', '$class_id', '$theme', '$type', '$section', '$time_start', '$time_end', '$days', '$instructor', '$room')";
-	if(!empty($_POST["con"])){
+	$query2 = "SELECT * FROM section WHERE section='$section'";
+	$result2 = $conn->query($query2);
+	if(!empty($_POST["con"]) && $result2->num_rows==0){
 		echo "INSERTED SECTIONS.<br>";
 		if($conn->query($query) === TRUE) {} else echo $query."<br>";
 	}
@@ -66,6 +70,8 @@ function parseContent($ex, $subject, $conn){
 for($n=0;$n<sizeof($subject);$n++){
 	parseContent($subject[$n], $subject, $conn);
 }
+
+$conn->close();
 
 
 ?>

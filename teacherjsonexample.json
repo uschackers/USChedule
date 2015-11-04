@@ -119,6 +119,19 @@
       "overall_rating": "3.1"
     },
     {
+      "tDept": "English",
+      "tSid": "1381",
+      "institution_name": "University of Southern California",
+      "tFname": "Thomas",
+      "tLname": "Gustafson",
+      "tid": 315213,
+      "tNumRatings": 62,
+      "rating_class": "good",
+      "contentType": "TEACHER",
+      "categoryType": "PROFESSOR",
+      "overall_rating": "3.8"
+    },
+    {
       "tDept": "Marketing",
       "tSid": "1381",
       "institution_name": "University of Southern California",
@@ -132,30 +145,17 @@
       "overall_rating": "3.7"
     },
     {
-      "tDept": "English",
-      "tSid": "1381",
-      "institution_name": "University of Southern California",
-      "tFname": "Thomas",
-      "tLname": "Gustafson",
-      "tid": 315213,
-      "tNumRatings": 61,
-      "rating_class": "good",
-      "contentType": "TEACHER",
-      "categoryType": "PROFESSOR",
-      "overall_rating": "3.8"
-    },
-    {
       "tDept": "Biology",
       "tSid": "1381",
       "institution_name": "University of Southern California",
       "tFname": "Albert",
       "tLname": "Herrera",
       "tid": 960918,
-      "tNumRatings": 60,
+      "tNumRatings": 61,
       "rating_class": "average",
       "contentType": "TEACHER",
       "categoryType": "PROFESSOR",
-      "overall_rating": "3.1"
+      "overall_rating": "3.2"
     },
     {
       "tDept": "Accounting",
@@ -262,7 +262,7 @@
       "overall_rating": "4.8"
     }
   ],
-  "searchResultsTotal": 2576,
-  "remaining": 2556,
+  "searchResultsTotal": 2582,
+  "remaining": 2562,
   "type": "search"
 }

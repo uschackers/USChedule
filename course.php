@@ -18,4 +18,6 @@ else $arr[] = 0;
 
 if(isset($classid)) echo json_encode($arr);
 
+$conn->close();
+
 ?>
